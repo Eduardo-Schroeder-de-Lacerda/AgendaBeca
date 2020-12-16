@@ -29,13 +29,19 @@ namespace AgendaBeca
             Console.WriteLine("Digite o nome da Pessoa: ");
             string nome = Console.ReadLine();
 
-            Console.WriteLine($"Digite a idade: ");
-            int idade = int.Parse(Console.ReadLine());
+            Console.WriteLine("Digite a data de nascimento (MM/dd/yyyy):");
+            DateTime dataNascimento = DateTime.Parse(Console.ReadLine());
+
+            int idade = DateTime.Now.Year - dataNascimento.Year;
+            if (DateTime.Now.DayOfYear < dataNascimento.DayOfYear)
+            {
+                idade = idade - 1;
+            }
 
             Console.WriteLine($"Digite a altura de: ");
             double altura = double.Parse(Console.ReadLine(), CultureInfo.InvariantCulture);
 
-            Pessoa pessoa = new Pessoa(nome, altura, idade);
+            Pessoa pessoa = new Pessoa(nome, altura, dataNascimento, idade);
 
             using (StreamWriter sw = File.AppendText(fileName))
             {
